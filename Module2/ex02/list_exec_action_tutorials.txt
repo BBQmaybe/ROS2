@@ -1,0 +1,2 @@
+/opt/ros/humble/lib/action_tutorials_py/fibonacci_action_client
+/opt/ros/humble/lib/action_tutorials_py/fibonacci_action_server
