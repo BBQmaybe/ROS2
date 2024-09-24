@@ -1,0 +1,3 @@
+[0.177s] ERROR:colcon:colcon build: The install directory 'install' was created with the layout 'merged'. Please remove the install directory, pick a different one or add the '--merge-install' option.
+
+#colcon build --symlink-install > colcon_build.txt 2>&1
