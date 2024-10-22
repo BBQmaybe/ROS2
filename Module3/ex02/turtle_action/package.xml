@@ -4,7 +4,7 @@
   <name>turtle_action</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="m.komarov2@g.nsu.ru">asphodel</maintainer>
+  <maintainer email="m.zyryanova@g.nsu.ru">Mary</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
