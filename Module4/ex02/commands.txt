@@ -1,0 +1,4 @@
+ros2 launch turtles_and_carrots launch_me.py
+ros2 run turtlesim turtle_teleop_key
+ros2 run rviz2 rviz2 -d $(ros2 pkg prefix --share turtle_tf2_py)/rviz/turtle_rviz.rviz
+
