@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="simple_diff_drive">
+
+  <xacro:property name="base_link_size" value="0.6 0.5 0.3"/>
+  <xacro:property name="right_drive_radius" value="0.08"/>
+  <xacro:property name="right_drive_length" value="0.04"/>
+  <xacro:property name="left_drive_radius" value="0.08"/>
+  <xacro:property name="left_drive_length" value="0.04"/>
+  <xacro:property name="front_driven_radius" value="0.0446"/>
+  <xacro:property name="front_driven_inertia" value="0.0016 0 0 0.0016 0 0 0.0016"/>
+
+  <xacro:property name="h" value="0.6"/>
+  <xacro:property name="w" value="0.5"/>
+  <xacro:property name="d" value="0.3"/>
+
+  
+  <material name="green">
+    <color rgba="0 0.4 0.2 1"/>
+  </material>
+  <material name="dark_green">
+    <color rgba="0 0.05 0 1"/>
+  </material>
+  <material name="light_green">
+    <color rgba="0.9 1.0 0.9 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${h} ${w} ${d}"/>
+      </geometry>
+       <material name="light_green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${h} ${w} ${d}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="${1 / 12 * 10 * (w * w + d * d)}" 
+               ixy="0.0" 
+               ixz="0.0" 
+               iyy="${1 / 12 * 10 * (h * h + d * d)}" 
+               iyz="0.0" 
+               izz="${1 / 12 * 10 * (w * w + h * h)}"/>
+    </inertial>
+  </link>
+
+  <link name="right_drive_link">
+    <visual>
+      <geometry>
+        <cylinder radius="${right_drive_radius}" length="${right_drive_length}"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${right_drive_radius}" length="${right_drive_length}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="${2 / 5 * front_driven_radius * front_driven_radius}" 
+               ixy="0.0" 
+               ixz="0.0" 
+               iyy="${2 / 5 * front_driven_radius * front_driven_radius}"
+               iyz="0.0" 
+               izz="${2 / 5 * front_driven_radius * front_driven_radius}"/>
+    </inertial>
+  </link>
+
+  <joint name="base_right_drive_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_drive_link"/>
+    <origin xyz="-0.25 -0.25 -0.14" rpy="1.5708 0 0"/>
+    <axis xyz="0 0 -2"/>
+  </joint>
+
+  <link name="left_drive_link">
+    <visual>
+      <geometry>
+        <cylinder radius="${left_drive_radius}" length="${left_drive_length}"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${left_drive_radius}" length="${left_drive_length}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="${2 / 5 * front_driven_radius * front_driven_radius}" 
+               ixy="0.0" 
+               ixz="0.0" 
+               iyy="${2 / 5 * front_driven_radius * front_driven_radius}"
+               iyz="0.0" 
+               izz="${2 / 5 * front_driven_radius * front_driven_radius}"/>
+    </inertial>
+  </link>
+
+  <joint name="base_left_drive_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_drive_link"/>
+    <origin xyz="-0.25 0.25 -0.14" rpy="1.5708 0 0"/>
+    <axis xyz="0 0 -2"/>
+  </joint>
+
+  <link name="front_driven_link">
+    <visual>
+      <geometry>
+        <sphere radius="${front_driven_radius}"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="${front_driven_radius}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="${2 / 5 * front_driven_radius * front_driven_radius}" 
+               ixy="0.0" 
+               ixz="0.0" 
+               iyy="${2 / 5 * front_driven_radius * front_driven_radius}"
+               iyz="0.0" 
+               izz="${2 / 5 * front_driven_radius * front_driven_radius}"/>
+    </inertial>
+  </link>
+
+  <joint name="base_driven_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_driven_link"/>
+    <origin xyz="0.19 0 -0.18" rpy="0 0 0"/>
+  </joint>
+
+</robot>
