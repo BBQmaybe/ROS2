@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="imu">
+    <xacro:property name="height" value="0.65"/>
+    <xacro:property name="block_thickness" value="0.05"/>
+
+    <joint name="imu_sensor_joint" type="fixed">
+        <origin xyz="0 0 ${8 * height / 12 + 0.05}"/>
+        <parent link="base_link"/>
+        <child link="imu_sensor_link"/>
+    </joint>
+     
+    <link name="imu_sensor_link">
+        <inertial>
+        <mass value="0.02" />
+        <inertia ixx="${(1/12) * 0.02 * 2 * (0.05*0.05)}" ixy="0.0" ixz="0.0"
+                 iyy="${(1/12) * 0.02 * (0.02*0.02+0.05*0.05)}" iyz="0.0"
+                 izz="${(1/12) * 0.02 * (0.02*0.02+0.05*0.05)}" />
+    </inertial>
+    <visual>
+        <geometry>
+            <box size="0.02 0.05 0.05"/>
+        </geometry>
+    </visual>
+    <collision>
+        <geometry>
+            <box size="0.02 0.05 0.05"/>
+        </geometry>
+    </collision>
+    </link>
+    
+    <gazebo reference="imu_sensor_link">
+        <gravity>true</gravity>
+        <sensor name='imu_sensor' type='imu'>
+            <!-- важно! -->
+            <gz_frame_id>robot/imu_sensor_link</gz_frame_id> 
+            <always_on>true</always_on>
+            <update_rate>0,5</update_rate>
+            <visualize>true</visualize>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
+ 
+  
+</robot>
